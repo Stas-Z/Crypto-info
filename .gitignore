@@ -1,0 +1,8 @@
+node_modules
+.fttemplates
+/build
+.env*
+*.env
+*/dist
+
+

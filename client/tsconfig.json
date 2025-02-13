@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "outDir": "./build/",
+        "noImplicitAny": true,
+        "module": "ESNext",
+        "target": "es5",
+        "jsx": "react-jsx",
+        "allowJs": true,
+        "strict": true,
+        "moduleResolution": "bundler",
+        "baseUrl": ".",
+        "paths": { "@/*": ["./src/*"] },
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "isolatedModules": true,
+        "skipLibCheck": true
+    },
+    "ts-node": {
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    },
+    "strictBindCallApply": true,
+    "exclude": ["node_modules"]
+}
