@@ -1,25 +1,27 @@
 {
-    "compilerOptions": {
-        "outDir": "./build/",
-        "noImplicitAny": true,
-        "module": "ESNext",
-        "target": "es5",
-        "jsx": "react-jsx",
-        "allowJs": true,
-        "strict": true,
-        "moduleResolution": "bundler",
-        "baseUrl": ".",
-        "paths": { "@/*": ["./src/*"] },
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "isolatedModules": true,
-        "skipLibCheck": true
-    },
-    "ts-node": {
-        "compilerOptions": {
-            "module": "CommonJS"
-        }
-    },
-    "strictBindCallApply": true,
-    "exclude": ["node_modules"]
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

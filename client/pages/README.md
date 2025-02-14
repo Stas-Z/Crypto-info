@@ -1,0 +1,1 @@
+Эта папка существует для того, чтобы Next.js не рассматривал `src/pages` как маршрутизатор страниц. `src/pages` используется как слой страниц в [Feature-Sliced ​​Design](https://feature-sliced.design)
