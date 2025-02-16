@@ -1,6 +1,6 @@
-import { Token } from '../../AddWallet/model/types/addWalletSchema'
+import { IToken } from '@/entities/Token'
 
-export const staticTokens: Token[] = [
+export const staticTokens: IToken[] = [
     {
         symbol: '1INCH',
         name: '1inch',

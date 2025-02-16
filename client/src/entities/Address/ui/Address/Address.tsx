@@ -1,9 +1,9 @@
 import { memo } from 'react'
 
-import { PublicAddress } from '@/entities/Wallet'
 import { classNames } from '@/shared/lib/classNames/classNames'
 
 import cls from './Address.module.scss'
+import { PublicAddress } from '../../model/types/address'
 
 interface AddressProps {
     className?: string

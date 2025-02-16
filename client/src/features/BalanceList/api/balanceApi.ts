@@ -1,10 +1,10 @@
 import { IBalance } from '@/entities/Balance'
-import { Token } from '@/entities/Token'
+import { IToken } from '@/entities/Token'
 import { rtkApi } from '@/shared/api/rtkApi'
 
 interface GetBalanceProps {
     address: string
-    tokens: Token[]
+    tokens: IToken[]
 }
 
 export const balanceApi = rtkApi.injectEndpoints({
