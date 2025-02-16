@@ -1,4 +1,4 @@
-export { useInitAuthData } from './model/api/userApi'
+export { useInitAuthDataQuery, useLogOutMutation } from './model/api/userApi'
 
 export { getUserAuthData } from './model/selectors/getUserAuthData/getUserAuthData'
 

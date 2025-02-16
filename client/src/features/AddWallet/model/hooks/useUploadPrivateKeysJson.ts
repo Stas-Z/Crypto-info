@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
+
 import { useAddAddressesMutation } from '../../api/walletsApi'
 
-export const useUploadPrivateKeysJson = () => {
-    const [addAddresses, { error }] = useAddAddressesMutation()
+export const useUploadPrivateKeysJson = (onClose: () => void) => {
+    const [addAddresses, { error, isSuccess }] = useAddAddressesMutation()
 
     const uploadKeys = (file: File) => {
         const reader = new FileReader()
@@ -28,6 +30,12 @@ export const useUploadPrivateKeysJson = () => {
 
         reader.readAsText(file)
     }
+
+    useEffect(() => {
+        if (isSuccess) {
+            onClose()
+        }
+    }, [isSuccess, onClose])
 
     return { uploadKeys, error }
 }

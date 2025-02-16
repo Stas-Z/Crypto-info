@@ -100,4 +100,16 @@ export class AuthService {
             throw new UnauthorizedException('Refresh токен не валидный')
         }
     }
+
+    async logout(response: Response) {
+        response.clearCookie('Authentication', {
+            httpOnly: true,
+            secure: this.configService.get('NODE_ENV') === 'production',
+        })
+        response.clearCookie('Refresh', {
+            httpOnly: true,
+            secure: this.configService.get('NODE_ENV') === 'production',
+        })
+        return response.json({ message: 'Successfully logged out' })
+    }
 }

@@ -33,9 +33,9 @@ export const AddWalletModal = memo(() => {
                         <Modal.Title>Добавить кошелек</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <AddWalletForm />
+                        <AddWalletForm onClose={handleCloseModal} />
                         <hr />
-                        <AddWalletJson />
+                        <AddWalletJson onClose={handleCloseModal} />
                     </Modal.Body>
                 </Modal>
             </div>

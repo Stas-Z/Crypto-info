@@ -22,7 +22,13 @@ export const userApi = rtkApi.injectEndpoints({
                 }
             },
         }),
+        logOut: build.mutation<void, void>({
+            query: () => ({
+                url: 'auth/logout',
+                method: 'POST',
+            }),
+        }),
     }),
 })
 
-export const useInitAuthData = userApi.useInitAuthDataQuery
+export const { useInitAuthDataQuery, useLogOutMutation } = userApi

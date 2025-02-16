@@ -14,10 +14,11 @@ import { addWalletActions } from '../../model/slice/walletSlice'
 
 interface AddWalletFormProps {
     className?: string
+    onClose: () => void
 }
 
 export const AddWalletForm = memo((props: AddWalletFormProps) => {
-    const { className } = props
+    const { className, onClose } = props
     const dispatch = useAppDispatch()
 
     const privateKey = useSelector(getPrivateKey)
@@ -25,9 +26,13 @@ export const AddWalletForm = memo((props: AddWalletFormProps) => {
     const [addAdresses, { error }] = useAddAddressesMutation()
 
     const onClickSubmit = useCallback(() => {
-        addAdresses({ privateKeys: [privateKey] }).unwrap()
-        dispatch(addWalletActions.setPrivateKey(''))
-    }, [addAdresses, dispatch, privateKey])
+        addAdresses({ privateKeys: [privateKey] })
+            .unwrap()
+            .then(() => {
+                onClose()
+                dispatch(addWalletActions.setPrivateKey(''))
+            })
+    }, [addAdresses, dispatch, onClose, privateKey])
 
     const onChangePrivateKey = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {

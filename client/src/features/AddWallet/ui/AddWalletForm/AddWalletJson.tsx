@@ -10,12 +10,13 @@ import { useUploadPrivateKeysJson } from '../../model/hooks/useUploadPrivateKeys
 
 interface AddWalletFormProps {
     className?: string
+    onClose: () => void
 }
 
 export const AddWalletJson = memo((props: AddWalletFormProps) => {
-    const { className } = props
+    const { className, onClose } = props
 
-    const { uploadKeys, error: errorJson } = useUploadPrivateKeysJson()
+    const { uploadKeys, error: errorJson } = useUploadPrivateKeysJson(onClose)
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]

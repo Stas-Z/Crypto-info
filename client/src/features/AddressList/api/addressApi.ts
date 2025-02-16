@@ -1,4 +1,4 @@
-import { PublicAddress } from '@/entities/Wallet'
+import { PublicAddress } from '@/entities/Address'
 import { rtkApi } from '@/shared/api/rtkApi'
 
 export const addressApi = rtkApi.injectEndpoints({

@@ -1,9 +1,10 @@
 'use client'
 import { memo, useCallback } from 'react'
 
+import { useRouter } from 'next/navigation'
 import { Button } from 'react-bootstrap'
 
-import { userActions } from '@/entities/User'
+import { useLogOutMutation, userActions } from '@/entities/User'
 import { classNames } from '@/shared/lib/classNames/classNames'
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch'
 
@@ -14,10 +15,14 @@ interface ExitButtonProps {
 export const ExitButton = memo((props: ExitButtonProps) => {
     const { className } = props
     const dispatch = useAppDispatch()
+    const router = useRouter()
+    const [logOut] = useLogOutMutation()
 
     const onClickExit = useCallback(() => {
         dispatch(userActions.logout())
-    }, [dispatch])
+        logOut()
+        router.push('/login')
+    }, [dispatch, logOut, router])
 
     return (
         <div className={classNames('ExitButton', {}, [className])}>
