@@ -1,13 +1,13 @@
 import { configureStore, ReducersMapObject } from '@reduxjs/toolkit'
 
 import { userReducer } from '@/entities/User'
-import { addWalletReducer } from '@/features/AddWallet'
-import { authMiddleware } from '@/features/AuthorizationForm'
 import { rtkApi } from '@/shared/api/rtkApi'
 import { __IS_DEV__ } from '@/shared/config/env'
 
 import { createReducerManager } from './reducerManager'
 import { StateSchema } from './StateSchema'
+import { addressMiddleware } from '../../../middleware/addressMiddleware/addressMiddleware'
+import { authMiddleware } from '../../../middleware/authMiddleware/authMiddleware'
 
 export function createReduxStore(
     initialState?: StateSchema,
@@ -16,7 +16,6 @@ export function createReduxStore(
     const rootReducers: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
         user: userReducer,
-        addWallet: addWalletReducer,
         [rtkApi.reducerPath]: rtkApi.reducer,
     }
 
@@ -29,6 +28,7 @@ export function createReduxStore(
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware()
                 .concat(rtkApi.middleware)
+                .concat(addressMiddleware)
                 .concat(authMiddleware),
     })
 

@@ -8,9 +8,7 @@ import { getError } from '@/shared/api/getError'
 import { classNames } from '@/shared/lib/classNames/classNames'
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch'
 
-import cls from './AddWalletForm.module.scss'
-import { useAddAddressesMutation } from '../../model/api/walletsApi'
-import { useUploadPrivateKeysJson } from '../../model/hooks/useUploadPrivateKeysJson'
+import { useAddAddressesMutation } from '../../api/walletsApi'
 import { getPrivateKey } from '../../model/selectors/getAddWalletSelector/getAddWalletSelector'
 import { addWalletActions } from '../../model/slice/walletSlice'
 
@@ -18,14 +16,9 @@ interface AddWalletFormProps {
     className?: string
 }
 
-// const initialReducers: ReducersList = {
-//     addWallet: addWalletReducer,
-// }
-
 export const AddWalletForm = memo((props: AddWalletFormProps) => {
     const { className } = props
     const dispatch = useAppDispatch()
-    const { uploadKeys, error: errorJson } = useUploadPrivateKeysJson()
 
     const privateKey = useSelector(getPrivateKey)
 
@@ -43,17 +36,10 @@ export const AddWalletForm = memo((props: AddWalletFormProps) => {
         [dispatch],
     )
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        if (!file) return
-
-        uploadKeys(file)
-    }
-
-    const errorMessageText = getError(error || errorJson)
+    const errorMessageText = getError(error)
 
     return (
-        <div className={classNames(cls.addWalletForm, {}, [className])}>
+        <div className={classNames('', {}, [className])}>
             <Form>
                 <Form.Group className="mb-3" controlId="privateKey">
                     <Form.Label>Private Key</Form.Label>
@@ -69,18 +55,7 @@ export const AddWalletForm = memo((props: AddWalletFormProps) => {
                 </Button>
             </Form>
 
-            <hr />
-
-            <Form.Group controlId="jsonFile" className="mb-3">
-                <Form.Label>Import JSON File</Form.Label>
-                <Form.Control
-                    type="file"
-                    accept=".json"
-                    onChange={handleFileChange}
-                />
-            </Form.Group>
-
-            {(error || errorJson) && (
+            {error && (
                 <Alert className="mt-3" variant="danger">
                     Error: {errorMessageText}
                 </Alert>

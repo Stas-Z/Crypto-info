@@ -1,5 +1,6 @@
 import { EnhancedStore, Reducer, ReducersMapObject } from '@reduxjs/toolkit'
 
+import { AddressSchema } from '@/entities/Address'
 import { UserSchema } from '@/entities/User'
 import { AddWalletSchema } from '@/features/AddWallet'
 import { AuthSchema } from '@/features/AuthorizationForm'
@@ -9,9 +10,10 @@ import { createReduxStore } from './store'
 
 export interface StateSchema {
     user: UserSchema
-    addWallet: AddWalletSchema
     [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>
 
+    address?: AddressSchema
+    addWallet?: AddWalletSchema
     authForm?: AuthSchema
 }
 

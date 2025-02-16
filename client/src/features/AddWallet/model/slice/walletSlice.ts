@@ -4,7 +4,6 @@ import { AddWalletSchema } from '../types/addWalletSchema'
 
 export const initialState: AddWalletSchema = {
     privateKey: '',
-    currentAddress: '',
 }
 
 export const addWalletSlice = createSlice({
@@ -13,9 +12,6 @@ export const addWalletSlice = createSlice({
     reducers: {
         setPrivateKey: (state, action: PayloadAction<string>) => {
             state.privateKey = action.payload
-        },
-        setCurrentAddress: (state, action: PayloadAction<string>) => {
-            state.currentAddress = action.payload
         },
     },
 })

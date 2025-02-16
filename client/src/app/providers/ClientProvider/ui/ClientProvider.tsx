@@ -2,12 +2,16 @@
 
 import { useEffect } from 'react'
 
-import { useInitAuthData } from '@/entities/User'
+import { useSelector } from 'react-redux'
+
+import { getUserAuthData, useInitAuthData } from '@/entities/User'
 import { USER_LOCALSTORAGE_KEY } from '@/shared/const/localstorage'
 import { PageLoader } from '@/widgets/PageLoader'
 
 export function ClientProvider({ children }: { children: React.ReactNode }) {
-    const { isLoading, error } = useInitAuthData()
+    const isAuth = useSelector(getUserAuthData)
+
+    const { isLoading, error } = useInitAuthData(undefined, { skip: !isAuth })
 
     useEffect(() => {
         if (error) {

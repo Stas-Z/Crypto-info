@@ -1,17 +1,22 @@
 'use client'
 
-import { useEffect } from 'react'
+import { ReactNode, useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
+import { useSelector } from 'react-redux'
 
+// eslint-disable-next-line
+import { getUserAuthData } from '@/entities/User'
 import { USER_LOCALSTORAGE_KEY } from '@/shared/const/localstorage'
 
-export default function ProtectedRoute({
-    children,
-}: {
-    children: React.ReactNode
-}) {
+interface ProtectedRouteProps {
+    children: ReactNode
+}
+
+export const ProtectedRoute = (props: ProtectedRouteProps) => {
+    const { children } = props
     const router = useRouter()
+    const isAuth = useSelector(getUserAuthData)
 
     useEffect(() => {
         const token = localStorage.getItem(USER_LOCALSTORAGE_KEY)
@@ -19,7 +24,7 @@ export default function ProtectedRoute({
         if (!token) {
             router.push('/login')
         }
-    }, [router])
+    }, [router, isAuth])
 
     return <>{children}</>
 }

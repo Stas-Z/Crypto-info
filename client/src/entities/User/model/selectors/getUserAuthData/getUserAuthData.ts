@@ -13,4 +13,3 @@ export const getCurrentUser = createSelector(
     getUserData,
     (user) => user.currentUser,
 )
-export const getUserInited = createSelector(getUserData, (user) => user._inited)

@@ -1,4 +1,4 @@
-import { useAddAddressesMutation } from '../api/walletsApi'
+import { useAddAddressesMutation } from '../../api/walletsApi'
 
 export const useUploadPrivateKeysJson = () => {
     const [addAddresses, { error }] = useAddAddressesMutation()
