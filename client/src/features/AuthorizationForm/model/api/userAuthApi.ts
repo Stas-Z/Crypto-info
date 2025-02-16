@@ -1,3 +1,4 @@
+'use client'
 import { User, userActions } from '@/entities/User'
 import { rtkApi } from '@/shared/api/rtkApi'
 import { USER_LOCALSTORAGE_KEY } from '@/shared/const/localstorage'
@@ -23,7 +24,6 @@ const userAuthApi = rtkApi.injectEndpoints({
                     localStorage.setItem(USER_LOCALSTORAGE_KEY, data.id)
                 } catch (err) {
                     console.error(err)
-                    localStorage.removeItem(USER_LOCALSTORAGE_KEY)
                 }
             },
         }),

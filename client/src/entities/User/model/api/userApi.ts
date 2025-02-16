@@ -14,8 +14,9 @@ export const userApi = rtkApi.injectEndpoints({
             onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
                 try {
                     const data = await queryFulfilled
-                    dispatch(userActions.setUser(data.data))
-                    dispatch(userActions.setInited())
+                    if (data) {
+                        dispatch(userActions.setUser(data.data))
+                    }
                 } catch (err) {
                     console.error(err)
                 }

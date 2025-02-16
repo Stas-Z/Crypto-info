@@ -7,6 +7,7 @@ export interface IConfig {
     dbUlr: string
     clientUrl: string
     NODE_ENV: string
+    INFURA_URL: string
 }
 
 export default () =>
@@ -21,4 +22,5 @@ export default () =>
 
         clientUrl: process.env.CLIENT_URL,
         NODE_ENV: process.env.NODE_ENV,
+        INFURA_URL: process.env.INFURA_URL,
     }) as IConfig

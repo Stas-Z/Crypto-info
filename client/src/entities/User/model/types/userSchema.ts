@@ -6,6 +6,4 @@ export interface User {
 export interface UserSchema {
     currentUser: User
     isAuth: boolean
-
-    _inited: boolean
 }

@@ -2,6 +2,7 @@ import { memo } from 'react'
 
 import { Container } from 'react-bootstrap'
 
+import { LoginForm } from '@/features/AuthorizationForm'
 import { classNames } from '@/shared/lib/classNames/classNames'
 
 import cls from './LoginPage.module.scss'
@@ -15,7 +16,7 @@ const LoginPage = (props: MainPageProps) => {
 
     return (
         <Container className={classNames(cls.loginPage, {}, [className])}>
-            Login page
+            <LoginForm />
         </Container>
     )
 }

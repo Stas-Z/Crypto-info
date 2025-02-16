@@ -1,0 +1,23 @@
+.balanceItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tokenName {
+    font-weight: bold;
+}
+
+.balanceDetails {
+    text-align: right;
+}
+
+.usdBalance {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.cryptoBalance {
+    color: #6c757d;
+    font-size: 0.9em;
+}

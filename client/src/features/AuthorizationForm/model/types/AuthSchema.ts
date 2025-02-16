@@ -1,3 +1,4 @@
+'use client'
 import { AuthTypes } from '../consts/authConsts'
 
 export interface AuthSchema {

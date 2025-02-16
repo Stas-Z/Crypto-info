@@ -1,7 +1,8 @@
 import { configureStore, ReducersMapObject } from '@reduxjs/toolkit'
 
 import { userReducer } from '@/entities/User'
-import { authMiddleware, regReducer } from '@/features/AuthorizationForm'
+import { addWalletReducer } from '@/features/AddWallet'
+import { authMiddleware } from '@/features/AuthorizationForm'
 import { rtkApi } from '@/shared/api/rtkApi'
 import { __IS_DEV__ } from '@/shared/config/env'
 
@@ -15,8 +16,7 @@ export function createReduxStore(
     const rootReducers: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
         user: userReducer,
-        authForm: regReducer,
-
+        addWallet: addWalletReducer,
         [rtkApi.reducerPath]: rtkApi.reducer,
     }
 

@@ -1,9 +1,16 @@
 'use client'
 import { memo, useCallback, useEffect, useRef } from 'react'
 
+import { useRouter } from 'next/navigation'
 import { Form, Button, Container, Card, Alert } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 
+import { getError } from '@/shared/api/getError'
+import { classNames } from '@/shared/lib/classNames/classNames'
+import {
+    DynamicModuleLoader,
+    ReducersList,
+} from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader'
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch'
 
 import cls from './LoginForm.module.scss'
@@ -14,16 +21,20 @@ import {
     getEmail,
     getPassword,
 } from '../../model/selectors/getLoginState/getLoginState'
-import { regActions } from '../../model/slice/regSlice'
+import { regActions, regReducer } from '../../model/slice/regSlice'
 import { AuthTypeTabs } from '../AuthTypeTabs/AuthTypeTabs'
 
 export interface LoginFormProps {
     onSuccess?: () => void
 }
 
-const LoginForm = (props: LoginFormProps) => {
-    const { onSuccess } = props
+const initialReducers: ReducersList = {
+    authForm: regReducer,
+}
 
+export const LoginForm = memo((props: LoginFormProps) => {
+    const { onSuccess } = props
+    const router = useRouter()
     const dispatch = useAppDispatch()
 
     const password = useSelector(getPassword)
@@ -32,8 +43,6 @@ const LoginForm = (props: LoginFormProps) => {
 
     const [login, { isLoading, error: errorAuth }] = useAuthByMail()
     const [registration, { error: errorReg, data }] = useRegByMail()
-
-    console.log('data', data)
 
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -55,10 +64,11 @@ const LoginForm = (props: LoginFormProps) => {
         try {
             await login({ email, password }).unwrap()
             onSuccess?.()
+            router.push('/')
         } catch (error) {
             console.log(error)
         }
-    }, [email, login, onSuccess, password])
+    }, [email, login, onSuccess, password, router])
 
     const onButtonClickHandler = useCallback(async () => {
         if (view === AuthType.REG) {
@@ -96,67 +106,58 @@ const LoginForm = (props: LoginFormProps) => {
         }
     }, [onKeyDown])
 
-    function getError() {
-        const error = errorAuth || errorReg
-        if (error) {
-            if ('data' in error) {
-                return (error.data as { message?: string }).message || ''
-            }
-            if ('status' in error) {
-                return 'Нет связи с сервером'
-            }
-        }
-        return ''
-    }
-
-    const errorMessageText = getError()
+    const errorMessageText = getError(errorAuth || errorReg)
     const buttonText = view === AuthType.AUTH ? 'Войти' : 'Зарегистрировать'
 
     return (
-        <Container className="d-flex justify-content-center align-items-center vh-100">
-            <Card className={cls.card}>
-                <AuthTypeTabs onChangeType={onChangeHandler} />
-                {errorMessageText && (
-                    <Alert variant="danger">{errorMessageText}</Alert>
-                )}
-                {data && (
-                    <Alert variant="primary">
-                        Вы успешно зарегистрировались
-                    </Alert>
-                )}
-                <Form>
-                    <Form.Group className="mb-3" controlId="formEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            autoFocus
-                            type="email"
-                            placeholder="Введите email"
-                            value={email}
-                            onChange={onChangeEmail}
-                        />
-                    </Form.Group>
+        <DynamicModuleLoader reducers={initialReducers}>
+            <Container
+                className={`${classNames(cls.loginForm, {}, [])} d-flex justify-content-center align-items-center`}
+            >
+                <Card className={cls.card}>
+                    <AuthTypeTabs onChangeType={onChangeHandler} />
+                    {errorMessageText && (
+                        <Alert variant="danger">{errorMessageText}</Alert>
+                    )}
+                    {data && (
+                        <Alert variant="primary">
+                            Вы успешно зарегистрировались
+                        </Alert>
+                    )}
+                    <Form>
+                        <Form.Group className="mb-3" controlId="formEmail">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                autoFocus
+                                type="email"
+                                placeholder="Введите email"
+                                value={email}
+                                onChange={onChangeEmail}
+                            />
+                        </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formPassword">
-                        <Form.Label>Пароль</Form.Label>
-                        <Form.Control
-                            type="password"
-                            placeholder="Введите пароль"
-                            value={password}
-                            onChange={onChangePassword}
-                        />
-                    </Form.Group>
+                        <Form.Group className="mb-3" controlId="formPassword">
+                            <Form.Label>Пароль</Form.Label>
+                            <Form.Control
+                                type="password"
+                                placeholder="Введите пароль"
+                                value={password}
+                                onChange={onChangePassword}
+                            />
+                        </Form.Group>
 
-                    <Button
-                        variant="primary"
-                        onClick={onButtonClickHandler}
-                        disabled={isLoading}
-                        className="w-100 mt-3"
-                    >
-                        {buttonText}
-                    </Button>
-                </Form>
-            </Card>
-        </Container>
+                        <Button
+                            variant="primary"
+                            onClick={onButtonClickHandler}
+                            disabled={isLoading}
+                            className="w-100 mt-3"
+                        >
+                            {buttonText}
+                        </Button>
+                    </Form>
+                </Card>
+            </Container>
+        </DynamicModuleLoader>
     )
-}
-export default memo(LoginForm)
+})
+LoginForm.displayName = 'LoginForm'

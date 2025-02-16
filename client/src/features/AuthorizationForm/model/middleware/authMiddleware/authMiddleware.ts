@@ -1,3 +1,4 @@
+'use client'
 import { Dispatch, isAnyOf } from '@reduxjs/toolkit'
 
 import { StateSchema } from '@/app/providers/StoreProvider'

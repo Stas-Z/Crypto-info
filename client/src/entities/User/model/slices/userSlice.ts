@@ -5,7 +5,6 @@ import { User, UserSchema } from '../types/userSchema'
 const initialState: UserSchema = {
     isAuth: false,
     currentUser: { email: '', id: '' },
-    _inited: false,
 }
 
 export const userSlice = createSlice({
@@ -18,9 +17,6 @@ export const userSlice = createSlice({
         },
         logout: (state) => {
             state.isAuth = false
-        },
-        setInited: (state) => {
-            state._inited = true
         },
     },
 })

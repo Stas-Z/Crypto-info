@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import '../styles/index.scss'
+import { ClientProvider } from '../providers/ClientProvider/ui/ClientProvider'
 import { StoreProvider } from '../providers/StoreProvider'
 
 export const metadata: Metadata = {
@@ -21,7 +22,9 @@ export function RootLayout({
             <head></head>
             <body>
                 <main className="app">
-                    <StoreProvider>{children}</StoreProvider>
+                    <StoreProvider>
+                        <ClientProvider>{children}</ClientProvider>
+                    </StoreProvider>
                 </main>
             </body>
         </html>

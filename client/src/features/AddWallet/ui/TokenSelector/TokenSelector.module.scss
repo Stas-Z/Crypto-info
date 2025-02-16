@@ -1,0 +1,21 @@
+.tokenImage {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto;
+    transition: filter 0.3s;
+    margin-bottom: 10px;
+}
+
+.tokenCard {
+    height: 100%;
+    text-align: center;
+    cursor: pointer;
+    border-color: rgb(40 157 247);
+}
+
+.grayscale {
+    filter: grayscale(100%);
+    opacity: 0.5;
+}

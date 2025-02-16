@@ -19,12 +19,11 @@ export function createReducerManager(
         UnknownAction
     >
 
-    let keysToRemove: Array<StateSchemaKey> = [] // Редьюсеры которые мы хотим удалить
+    let keysToRemove: Array<StateSchemaKey> = []
 
     return {
         getReducerMap: () => reducers,
 
-        // Главный редюсер, который учитывает динамические удаления
         reduce: (state: StateSchema | undefined, action: UnknownAction) => {
             if (keysToRemove.length > 0 && state) {
                 state = { ...state }
@@ -35,9 +34,8 @@ export function createReducerManager(
             }
 
             return combinedReducer(state, action)
-        }, // Приводим к правильному типу
+        },
 
-        // Добавляет новый редьюсер
         add: (key: StateSchemaKey, reducer: Reducer) => {
             if (!key || reducers[key]) {
                 return
@@ -50,7 +48,6 @@ export function createReducerManager(
             >
         },
 
-        // Удаляет редьюсер
         remove: (key: StateSchemaKey) => {
             if (!key || !reducers[key]) {
                 return

@@ -23,13 +23,11 @@ export class PublicAddressController {
     @Post()
     async createAddress(
         @CurrentUser() user: UserDocument,
-        @Body('address') address: string,
-        @Body('currency') currency: string,
+        @Body('addresses') addresses: string[],
     ) {
-        return this.addressService.createAddress(
+        return this.addressService.createAddresses(
             new Types.ObjectId(user._id),
-            address,
-            currency,
+            addresses,
         )
     }
 

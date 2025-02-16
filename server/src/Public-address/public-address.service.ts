@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import {
+    ConflictException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model, Types } from 'mongoose'
 
@@ -14,21 +18,36 @@ export class PublicAddressService {
         private addressModel: Model<PublicAddressDocument>,
     ) {}
 
-    async createAddress(
-        userId: Types.ObjectId,
-        address: string,
-        currency: string,
-    ) {
-        const newAddress = new this.addressModel({
+    async createAddresses(userId: Types.ObjectId, addresses: string[]) {
+        const existingAddresses = await this.addressModel
+            .find({
+                userId,
+                address: { $in: addresses },
+            })
+            .select('address')
+
+        const existingAddressSet = new Set(
+            existingAddresses.map((addr) => addr.address),
+        )
+
+        const newAddresses = addresses.filter(
+            (address) => !existingAddressSet.has(address),
+        )
+
+        if (newAddresses.length === 0) {
+            throw new ConflictException('Адрес уже существуют в базе данных.')
+        }
+
+        const addressesToSave = newAddresses.map((address) => ({
             address,
-            currency,
-            user: userId,
-        })
-        return newAddress.save()
+            userId,
+        }))
+
+        return this.addressModel.insertMany(addressesToSave)
     }
 
     async getAddressByUser(userId: Types.ObjectId) {
-        return this.addressModel.find({ user: userId })
+        return this.addressModel.find({ userId })
     }
 
     async getAddressById(id: Types.ObjectId) {
