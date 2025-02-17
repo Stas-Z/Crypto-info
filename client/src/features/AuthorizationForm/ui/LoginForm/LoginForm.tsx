@@ -112,7 +112,7 @@ export const LoginForm = memo((props: LoginFormProps) => {
     return (
         <DynamicModuleLoader reducers={initialReducers}>
             <Container
-                className={`${classNames(cls.loginForm, {}, [])} d-flex justify-content-center align-items-center`}
+                className={`${classNames(cls.loginForm, {}, [])} d-flex flex-column justify-content-center align-items-center `}
             >
                 <Card className={cls.card}>
                     <AuthTypeTabs onChangeType={onChangeHandler} />
@@ -156,6 +156,13 @@ export const LoginForm = memo((props: LoginFormProps) => {
                         </Button>
                     </Form>
                 </Card>
+                {isLoading && (
+                    <Alert className="mt-5" variant="primary">
+                        Ожидайте загрузку! Так как используется бесплатный
+                        сервер, время первой загрузки может занять некоторое
+                        время
+                    </Alert>
+                )}
             </Container>
         </DynamicModuleLoader>
     )
