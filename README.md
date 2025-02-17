@@ -44,7 +44,7 @@
 #### Клиентская часть (client/.env.development):
 
 ```env
-NEXT_PUBLIC_API_=http://localhost:5000
+NEXT_PUBLIC__API__=http://localhost:5000
 ```
 
 #### Серверная часть (server/.development.env):
