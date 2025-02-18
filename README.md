@@ -47,7 +47,7 @@
 NEXT_PUBLIC__API__=http://localhost:5000
 ```
 
-#### Серверная часть (server/.development.env):
+#### Серверная часть (server/.env):
 
 ```env
 PORT=5000
