@@ -2,6 +2,12 @@ import { IToken } from '@/entities/Token'
 
 export const staticTokens: IToken[] = [
     {
+        symbol: 'Tether',
+        name: 'USDT',
+        image: 'https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661',
+        contractAddress: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+    },
+    {
         symbol: '1INCH',
         name: '1inch',
         image: 'https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0x111111111117dC0aa78b770fA6A738034120C302/logo.png',
@@ -32,12 +38,7 @@ export const staticTokens: IToken[] = [
         image: 'https://coin-images.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009',
         contractAddress: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
     },
-    {
-        symbol: 'Tether',
-        name: 'USDT',
-        image: 'https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661',
-        contractAddress: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-    },
+
     {
         symbol: 'UNI',
         name: 'Uniswap',
