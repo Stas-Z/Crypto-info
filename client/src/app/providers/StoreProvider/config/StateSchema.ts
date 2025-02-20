@@ -10,9 +10,9 @@ import { createReduxStore } from './store'
 
 export interface StateSchema {
     user: UserSchema
+    address: AddressSchema
     [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>
 
-    address?: AddressSchema
     addWallet?: AddWalletSchema
     authForm?: AuthSchema
 }

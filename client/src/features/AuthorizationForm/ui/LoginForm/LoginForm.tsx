@@ -6,6 +6,7 @@ import { Form, Button, Container, Card, Alert } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 
 import { getError } from '@/shared/api/getError'
+import { rtkApi } from '@/shared/api/rtkApi'
 import { classNames } from '@/shared/lib/classNames/classNames'
 import {
     DynamicModuleLoader,
@@ -36,6 +37,10 @@ export const LoginForm = memo((props: LoginFormProps) => {
     const { onSuccess } = props
     const router = useRouter()
     const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(rtkApi.util.resetApiState())
+    }, [dispatch])
 
     const password = useSelector(getPassword)
     const email = useSelector(getEmail)

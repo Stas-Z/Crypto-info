@@ -50,12 +50,14 @@ export class AuthService {
 
         response.cookie('Authentication', accesToken, {
             httpOnly: true,
-            secure: this.configService.get('NODE_ENV') === 'production',
+            secure: true,
+            sameSite: 'none',
             expires: expiresAccessToken,
         })
         response.cookie('Refresh', refreshToken, {
             httpOnly: true,
-            secure: this.configService.get('NODE_ENV') === 'production',
+            secure: true,
+            sameSite: 'none',
             expires: expiresRefreshToken,
         })
 
@@ -104,11 +106,13 @@ export class AuthService {
     async logout(response: Response) {
         response.clearCookie('Authentication', {
             httpOnly: true,
-            secure: this.configService.get('NODE_ENV') === 'production',
+            secure: true,
+            sameSite: 'none',
         })
         response.clearCookie('Refresh', {
             httpOnly: true,
-            secure: this.configService.get('NODE_ENV') === 'production',
+            secure: true,
+            sameSite: 'none',
         })
         return response.json({ message: 'Successfully logged out' })
     }

@@ -1,5 +1,6 @@
 import { configureStore, ReducersMapObject } from '@reduxjs/toolkit'
 
+import { addressReducer } from '@/entities/Address'
 import { userReducer } from '@/entities/User'
 import { rtkApi } from '@/shared/api/rtkApi'
 import { __IS_DEV__ } from '@/shared/config/env'
@@ -16,6 +17,7 @@ export function createReduxStore(
     const rootReducers: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
         user: userReducer,
+        address: addressReducer,
         [rtkApi.reducerPath]: rtkApi.reducer,
     }
 

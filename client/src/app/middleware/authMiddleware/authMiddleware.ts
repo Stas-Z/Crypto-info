@@ -1,22 +1,21 @@
 'use client'
-import { Dispatch } from '@reduxjs/toolkit'
+import { Middleware } from '@reduxjs/toolkit'
 
-import { StateSchema } from '@/app/providers/StoreProvider'
+import { AppDispatch, StateSchema } from '@/app/providers/StoreProvider'
+import { addressActions } from '@/entities/Address'
 import { userActions } from '@/entities/User'
-import { rtkApi } from '@/shared/api/rtkApi'
 import { USER_LOCALSTORAGE_KEY } from '@/shared/const/localstorage'
 
 interface Store {
-    dispatch: Dispatch
+    dispatch: AppDispatch
     getState: () => StateSchema
 }
 
-export const authMiddleware =
-    (store: Store) =>
-    (next: (action: unknown) => unknown) =>
-    (action: unknown): void => {
+export const authMiddleware: Middleware =
+    (store: Store) => (next) => (action) => {
         if (userActions.logout.match(action)) {
-            store.dispatch(rtkApi.util.resetApiState())
+            store.dispatch(addressActions.setCurrentAddress(''))
+
             localStorage.removeItem(USER_LOCALSTORAGE_KEY)
         }
 
