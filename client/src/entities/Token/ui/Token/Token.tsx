@@ -3,6 +3,7 @@ import { memo, useCallback } from 'react'
 import { Card, Col } from 'react-bootstrap'
 
 import { classNames } from '@/shared/lib/classNames/classNames'
+import { AppImage } from '@/shared/ui/AppImage'
 
 import cls from './Token.module.scss'
 import { IToken } from '../../model/types/token'
@@ -36,12 +37,15 @@ export const Token = memo((props: TokenProps) => {
                 onClick={onClickToken}
             >
                 <Card.Body>
-                    <Card.Img
-                        variant="top"
+                    <AppImage
+                        className={cls.tokenImage}
                         src={token.image}
                         alt={token.symbol}
-                        className={cls.tokenImage}
+                        width={60}
+                        height={60}
+                        fallbackImage="/img/dafult_token.png"
                     />
+
                     <Card.Text>{token.symbol}</Card.Text>
                 </Card.Body>
             </Card>
