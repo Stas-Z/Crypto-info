@@ -1,5 +1,6 @@
 import { Middleware } from '@reduxjs/toolkit'
 
+import { addressActions } from '@/entities/Address'
 import { addressApi } from '@/features/AddressList'
 import { walletsApi } from '@/features/AddWallet'
 
@@ -25,6 +26,9 @@ export const addressMiddleware: Middleware =
                         },
                     ),
                 )
+                store.dispatch(
+                    addressActions.setCurrentAddress(addresses[0].address),
+                )
             }
         }
         if (walletsApi.endpoints.decryptWallet.matchFulfilled(action)) {
@@ -39,6 +43,9 @@ export const addressMiddleware: Middleware =
                             draft.push(...addresses)
                         },
                     ),
+                )
+                store.dispatch(
+                    addressActions.setCurrentAddress(addresses[0].address),
                 )
             }
         }
