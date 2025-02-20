@@ -3,7 +3,7 @@ import { memo, useCallback } from 'react'
 import { Card, Col } from 'react-bootstrap'
 
 import { classNames } from '@/shared/lib/classNames/classNames'
-import { AppImage } from '@/shared/ui/AppImage'
+import { AppImage } from '@/shared/ui/AppImage/AppImage'
 
 import cls from './Token.module.scss'
 import { IToken } from '../../model/types/token'

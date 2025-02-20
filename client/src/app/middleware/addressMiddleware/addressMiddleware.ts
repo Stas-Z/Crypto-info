@@ -27,6 +27,21 @@ export const addressMiddleware: Middleware =
                 )
             }
         }
+        if (walletsApi.endpoints.decryptWallet.matchFulfilled(action)) {
+            const addresses = action.payload
+
+            if (addresses.length > 0) {
+                store.dispatch(
+                    addressApi.util.updateQueryData(
+                        'getAddresses',
+                        undefined,
+                        (draft) => {
+                            draft.push(...addresses)
+                        },
+                    ),
+                )
+            }
+        }
 
         return next(action)
     }

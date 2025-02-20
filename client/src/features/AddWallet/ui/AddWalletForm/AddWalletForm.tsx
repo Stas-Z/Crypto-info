@@ -47,14 +47,15 @@ export const AddWalletForm = memo((props: AddWalletFormProps) => {
         <div className={classNames('', {}, [className])}>
             <Form>
                 <Form.Group className="mb-3" controlId="privateKey">
-                    <Form.Label>Private Key</Form.Label>
+                    <Form.Label>Приватный ключ</Form.Label>
                     <Form.Control
                         type="text"
                         value={privateKey}
                         onChange={onChangePrivateKey}
-                        placeholder="Enter private key"
+                        placeholder="Введите приватный ключ"
                     />
                 </Form.Group>
+
                 <Button variant="primary" onClick={onClickSubmit}>
                     Импортировать счет
                 </Button>

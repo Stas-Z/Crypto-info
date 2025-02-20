@@ -11,3 +11,7 @@ export const getPrivateKey = createSelector(
     getWalletState,
     (addWallet) => addWallet.privateKey,
 )
+export const getPasswordKey = createSelector(
+    getWalletState,
+    (addWallet) => addWallet.password,
+)
