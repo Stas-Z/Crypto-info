@@ -1,3 +1,5 @@
+export { AddWalletSeed } from './ui/AddWalletForm/AddWalletSeed'
+
 export { walletsApi } from './api/walletsApi'
 
 export { addWalletReducer } from './model/slice/walletSlice'

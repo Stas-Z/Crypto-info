@@ -21,7 +21,7 @@ export function ClientProvider({ children }: { children: React.ReactNode }) {
             localStorage.removeItem(USER_LOCALSTORAGE_KEY)
             console.error('Ошибка загрузки пользователя', error)
         }
-    }, [error])
+    }, [error, isAuth])
 
     if (isLoading) {
         return <PageLoader />

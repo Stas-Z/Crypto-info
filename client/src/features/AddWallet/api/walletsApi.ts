@@ -12,6 +12,10 @@ interface DecryptWalletProps {
     password: string
 }
 
+interface GetAddressesFromSeedProps {
+    seedFraze: string
+}
+
 export const walletsApi = rtkApi.injectEndpoints({
     endpoints: (builder) => ({
         addAddresses: builder.mutation<PublicAddress[], AddWalletProps>({
@@ -54,7 +58,40 @@ export const walletsApi = rtkApi.injectEndpoints({
                 }
             },
         }),
+        getAddressesFromSeed: builder.mutation<
+            PublicAddress[],
+            GetAddressesFromSeedProps
+        >({
+            query: ({ seedFraze }) => {
+                try {
+                    const mnemonicObj = ethers.Mnemonic.fromPhrase(seedFraze)
+                    const addresses: string[] = []
+
+                    for (let i = 0; i < 5; i++) {
+                        const wallet = ethers.HDNodeWallet.fromMnemonic(
+                            mnemonicObj,
+                            `m/44'/60'/0'/0/${i}`,
+                        )
+                        addresses.push(wallet.address)
+                    }
+
+                    return {
+                        url: 'public-address',
+                        method: 'POST',
+                        body: { addresses },
+                    }
+                } catch (error) {
+                    throw new Error(
+                        'Ошибка при получении адресов из сид-фразы.',
+                    )
+                }
+            },
+        }),
     }),
 })
 
-export const { useAddAddressesMutation, useDecryptWalletMutation } = walletsApi
+export const {
+    useAddAddressesMutation,
+    useDecryptWalletMutation,
+    useGetAddressesFromSeedMutation,
+} = walletsApi

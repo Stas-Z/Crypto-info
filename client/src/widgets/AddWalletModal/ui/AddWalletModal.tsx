@@ -1,43 +1,58 @@
 'use client'
 
-import { useState, useCallback, memo } from 'react'
+import { memo } from 'react'
 
-import { Button, Modal } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
-import { AddWalletForm, addWalletReducer } from '@/features/AddWallet'
+import {
+    AddWalletForm,
+    addWalletReducer,
+    AddWalletSeed,
+} from '@/features/AddWallet'
 import { AddWalletJson } from '@/features/AddWallet'
 import {
     DynamicModuleLoader,
     ReducersList,
 } from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader'
+import { useModal } from '@/shared/lib/hooks/useModal/useModal'
+import { AppModal } from '@/shared/ui/AppModal/AppModal'
+
+import cls from './AddWalletModal.module.scss'
 
 const initialReducers: ReducersList = {
     addWallet: addWalletReducer,
 }
 
 export const AddWalletModal = memo(() => {
-    const [showModal, setShowModal] = useState(false)
-
-    const handleShowModal = useCallback(() => setShowModal(true), [])
-    const handleCloseModal = useCallback(() => setShowModal(false), [])
+    const [modalForm] = useModal()
+    const [modalSeed] = useModal()
 
     return (
         <DynamicModuleLoader reducers={initialReducers}>
-            <div>
-                <Button variant="primary" onClick={handleShowModal}>
+            <div className={cls.modal}>
+                <Button variant="primary" onClick={modalForm.handleShow}>
                     Добавить кошелек
                 </Button>
+                <Button variant="primary" onClick={modalSeed.handleShow}>
+                    Ввести сид-фразу
+                </Button>
 
-                <Modal show={showModal} onHide={handleCloseModal} centered>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Добавить кошелек</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <AddWalletForm onClose={handleCloseModal} />
-                        <hr />
-                        <AddWalletJson onClose={handleCloseModal} />
-                    </Modal.Body>
-                </Modal>
+                <AppModal
+                    title="Добавить кошелек"
+                    isOpen={modalForm.showModal}
+                    onClose={modalForm.handleClose}
+                >
+                    <AddWalletForm onClose={modalForm.handleClose} />
+                    <hr />
+                    <AddWalletJson onClose={modalForm.handleClose} />
+                </AppModal>
+                <AppModal
+                    title="Введите Сид-фразу"
+                    isOpen={modalSeed.showModal}
+                    onClose={modalSeed.handleClose}
+                >
+                    <AddWalletSeed onClose={modalSeed.handleClose} />
+                </AppModal>
             </div>
         </DynamicModuleLoader>
     )

@@ -13,25 +13,11 @@ interface Store {
 
 export const addressMiddleware: Middleware =
     (store: Store) => (next) => (action) => {
-        if (walletsApi.endpoints.addAddresses.matchFulfilled(action)) {
-            const addresses = action.payload
-
-            if (addresses.length > 0) {
-                store.dispatch(
-                    addressApi.util.updateQueryData(
-                        'getAddresses',
-                        undefined,
-                        (draft) => {
-                            draft.push(...addresses)
-                        },
-                    ),
-                )
-                store.dispatch(
-                    addressActions.setCurrentAddress(addresses[0].address),
-                )
-            }
-        }
-        if (walletsApi.endpoints.decryptWallet.matchFulfilled(action)) {
+        if (
+            walletsApi.endpoints.addAddresses.matchFulfilled(action) ||
+            walletsApi.endpoints.decryptWallet.matchFulfilled(action) ||
+            walletsApi.endpoints.getAddressesFromSeed.matchFulfilled(action)
+        ) {
             const addresses = action.payload
 
             if (addresses.length > 0) {
